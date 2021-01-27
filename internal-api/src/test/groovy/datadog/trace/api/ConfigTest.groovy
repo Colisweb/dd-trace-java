@@ -123,7 +123,6 @@ class ConfigTest extends DDSpecification {
     prop.setProperty(TRACE_ENABLED, "false")
     prop.setProperty(ID_GENERATION_STRATEGY, "SEQUENTIAL")
     prop.setProperty(WRITER_TYPE, "LoggingWriter")
-    prop.setProperty(PRIORITIZATION_TYPE, "EnsureTrace")
     prop.setProperty(AGENT_HOST, "somehost")
     prop.setProperty(TRACE_AGENT_PORT, "123")
     prop.setProperty(AGENT_UNIX_DOMAIN_SOCKET, "somepath")
@@ -187,7 +186,6 @@ class ConfigTest extends DDSpecification {
     config.idGenerationStrategy == SEQUENTIAL
     config.traceEnabled == false
     config.writerType == "LoggingWriter"
-    config.prioritizationType == "EnsureTrace"
     config.agentHost == "somehost"
     config.agentPort == 123
     config.agentUnixDomainSocket == "somepath"
@@ -312,7 +310,6 @@ class ConfigTest extends DDSpecification {
     config.serviceName == "something else"
     config.traceEnabled == false
     config.writerType == "LoggingWriter"
-    config.prioritizationType == "EnsureTrace"
     config.agentHost == "somehost"
     config.agentPort == 123
     config.agentUnixDomainSocket == "somepath"
@@ -387,7 +384,6 @@ class ConfigTest extends DDSpecification {
     config.serviceName == "still something else"
     config.traceEnabled == false
     config.writerType == "LoggingWriter"
-    config.prioritizationType == "EnsureTrace"
     config.propagationStylesToExtract.toList() == [PropagationStyle.B3, PropagationStyle.DATADOG]
     config.propagationStylesToInject.toList() == [PropagationStyle.DATADOG, PropagationStyle.B3]
     config.jmxFetchMetricsConfigs == ["some/file"]
@@ -413,7 +409,6 @@ class ConfigTest extends DDSpecification {
     then:
     config.serviceName == "what we actually want"
     config.writerType == "DDAgentWriter"
-    config.prioritizationType == "FastLane"
     config.agentHost == "somewhere"
     config.agentPort == 123
     config.agentUrl == "http://somewhere:123"
@@ -447,7 +442,6 @@ class ConfigTest extends DDSpecification {
     config.serviceName == " "
     config.traceEnabled == true
     config.writerType == " "
-    config.prioritizationType == " "
     config.agentHost == " "
     config.agentPort == 8126
     config.agentUrl == "http:// :8126"
@@ -545,7 +539,6 @@ class ConfigTest extends DDSpecification {
     config.serviceName == "something else"
     config.traceEnabled == false
     config.writerType == "LoggingWriter"
-    config.prioritizationType == "EnsureTrace"
     config.agentHost == "somehost"
     config.agentPort == 123
     config.agentUnixDomainSocket == "somepath"
@@ -578,7 +571,6 @@ class ConfigTest extends DDSpecification {
     then:
     config.serviceName == "unnamed-java-app"
     config.writerType == "DDAgentWriter"
-    config.prioritizationType == "FastLane"
   }
 
   def "override empty properties"() {
@@ -591,7 +583,6 @@ class ConfigTest extends DDSpecification {
     then:
     config.serviceName == "unnamed-java-app"
     config.writerType == "DDAgentWriter"
-    config.prioritizationType == "FastLane"
   }
 
   def "override non empty properties"() {
@@ -605,7 +596,6 @@ class ConfigTest extends DDSpecification {
     then:
     config.serviceName == "unnamed-java-app"
     config.writerType == "DDAgentWriter"
-    config.prioritizationType == "FastLane"
   }
 
   def "captured env props override default props"() {
