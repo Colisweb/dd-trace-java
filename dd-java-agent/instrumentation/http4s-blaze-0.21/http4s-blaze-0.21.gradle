@@ -1,0 +1,39 @@
+// Set properties before any plugins get loaded
+ext {
+  minJavaVersionForTests = JavaVersion.VERSION_1_8
+}
+
+apply from: "$rootDir/gradle/java.gradle"
+apply from: "$rootDir/gradle/test-with-scala.gradle"
+
+muzzle {
+  pass {
+    group = 'org.http4s'
+    module = 'http4s-blaze-server_2.12'
+    versions = "[0.21.0,)"
+  }
+  pass {
+    group = 'org.http4s'
+    module = 'http4s-blaze-server_2.13'
+    versions = "[0.21.0,)"
+  }
+}
+
+configurations {
+  testArtifacts
+}
+
+dependencies {
+  main_java8CompileOnly group: 'org.http4s', name: 'http4s-blaze-server_2.12', version: '0.21.0'
+  main_java8CompileOnly group: 'com.google.auto.service', name: 'auto-service-annotations', version: '1.0-rc7'
+
+  testCompile project(':dd-java-agent:instrumentation:trace-annotation')
+  testCompile project(':dd-java-agent:instrumentation:scala-concurrent')
+
+//  testCompile group: 'com.typesafe.akka', name: 'akka-http_2.11', version: '10.0.0'
+//  testCompile group: 'com.squareup.okhttp3', name: 'okhttp', version: '3.6.0'
+//  testCompile project(':dd-java-agent:instrumentation:trace-annotation')
+//  testCompile project(':dd-java-agent:instrumentation:akka-concurrent')
+//  testCompile project(':dd-java-agent:instrumentation:scala-promise:scala-promise-2.10')
+//  testCompile project(':dd-java-agent:instrumentation:scala-promise:scala-promise-2.13')
+}
